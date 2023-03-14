@@ -19,7 +19,7 @@ jobs:
       - run: 
           name: install hadolint 
           command: | 
-            sudo curl -sSL https://github.com/hadolint/hadolint/releases/download/v2.7.0/hadolint-Linux-x86_64 > /usr/bin/hadolint
+            sudo curl -sSL https://github.com/hadolint/hadolint/releases/download/v2.7.0/hadolint-Linux-x86_64
             sudo chmod +x /usr/bin/hadolint 
       - run: 
           name: linting dockerfile
