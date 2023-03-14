@@ -32,7 +32,7 @@ jobs:
           key: v1-dependencies-{{ checksum "requirements.txt" }}
 
 
-  buid-docker: 
+  build-docker: 
     environment: 
       IMAGE_NAME: laclac0901/hello                     
     docker:
