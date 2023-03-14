@@ -1,6 +1,37 @@
 version: 2.1
 
 jobs: 
+
+  lint: 
+    docker: 
+      - images: circleci/python:3.6.7-stretch
+    steps: 
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements.txt" }}
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+      - run: 
+          name: install hadolint 
+          command: | 
+            curl -sSL https://github.com/hadolint/hadolint/releases/download/v2.7.0/hadolint-Linux-x86_64 > /usr/bin/hadolint
+            chmod +x /usr/bin/hadolint 
+      - run: 
+          name: linting dockerfile
+          command: |
+            . venv/bin/activate
+            make lint
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+
+
   buid-docker: 
     environment: 
       IMAGE_NAME: laclac0901/hello                     
@@ -21,10 +52,5 @@ jobs:
 workflows:
   default:
     jobs:
-# CI
+      - lint
       - build-docker
-      - unit-test
-# CD
-      - push-image
-      - create-infrastructure
-      - deploy      
