@@ -4,7 +4,7 @@ jobs:
 
   lint: 
     docker: 
-      - images: circleci/python:3.6.7-stretch
+      - image: circleci/python:3.6.7-stretch
     steps: 
       - checkout
       - restore_cache:
