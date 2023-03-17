@@ -74,29 +74,29 @@ jobs:
   #         command: |
   #           ls
 
-  # deploy-k8s:
-  #   docker: 
-  #     - image: 'cimg/python:3.10'
-  #   parameters:
-  #     cluster-name:
-  #       description: Name of the EKS cluster
-  #       type: string
-  #       default: 'ngocht-eks'
-  #   steps: 
-  #     - checkout   
-  #     - aws-eks/update-kubeconfig-with-authenticator:
-  #         cluster-name: << parameters.cluster-name >>
-  #         install-kubectl: true
-  #     - kubernetes/create-or-update-resource:
-  #         get-rollout-status: true
-  #         resource-file-path: ./files/deployment.yml
-  #         resource-name: deployment/app
-  #         show-kubectl-command: true
-  #     - kubernetes/create-or-update-resource:
-  #         get-rollout-status: true
-  #         resource-file-path: ./files/service.yml
-  #         resource-name: deployment/app
-  #         show-kubectl-command: true
+  deploy-k8s:
+    docker: 
+      - image: 'cimg/python:3.10'
+    parameters:
+      cluster-name:
+        description: Name of the EKS cluster
+        type: string
+        default: 'ngocht-eks'
+    steps: 
+      - checkout   
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+          install-kubectl: true
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: ./files/deployment.yml
+          resource-name: deployment/app
+          show-kubectl-command: true
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: ./files/service.yml
+          resource-name: deployment/app
+          show-kubectl-command: true
 
 
 
@@ -110,31 +110,31 @@ jobs:
       #     command: |
       #       kubectl get services
 
-  deploy-k8s:
-    docker: 
-      - image: 
-    parameters:
-      cluster-name:
-        description: Name of the EKS cluster
-        type: string
-        default: 'ngocht-eks'
-    steps: 
-      - checkout
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: << parameters.cluster-name >>
-          install-kubectl: true
-      - kubernetes/create-or-update-resource:
-          get-rollout-status: true
-          resource-file-path: ./files/deployment.yaml
-          resource-name: deployment/app
-          show-kubectl-command: true
+  # deploy-k8s:
+  #   docker: 
+  #     - image: 'cimg/python:3.10'
+  #   parameters:
+  #     cluster-name:
+  #       description: Name of the EKS cluster
+  #       type: string
+  #       default: 'ngocht-eks'
+  #   steps: 
+  #     - checkout
+  #     - aws-eks/update-kubeconfig-with-authenticator:
+  #         cluster-name: << parameters.cluster-name >>
+  #         install-kubectl: true
+  #     - kubernetes/create-or-update-resource:
+  #         get-rollout-status: true
+  #         resource-file-path: ./files/deployment.yaml
+  #         resource-name: deployment/app
+  #         show-kubectl-command: true
 
-      - kubernetes/install:
-          kubectl-version: v1.22.0
-      - command: |
-          cd files
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
+  #     - kubernetes/install:
+  #         kubectl-version: v1.22.0
+  #     - command: |
+  #         cd files
+  #         kubectl apply -f deployment.yaml
+  #         kubectl apply -f service.yaml
 
 workflows:
   default:
