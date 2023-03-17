@@ -78,12 +78,12 @@ jobs:
           install-kubectl: true
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
-          resource-file-path: ./files/deployment.yaml
+          resource-file-path: ./files/deployment.yml
           resource-name: deployment/app
           show-kubectl-command: true
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
-          resource-file-path: ./files/service.yaml
+          resource-file-path: ./files/service.yml
           resource-name: deployment/app
           show-kubectl-command: true
 
