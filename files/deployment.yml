@@ -1,21 +1,50 @@
-apiVersion: extensions/v1beta1
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   labels:
+#     service: app
+#   name: app
+# spec:
+#   replicas: 1
+#   template:
+#     metadata:
+#       labels:
+#         service: app
+#     spec:
+#       containers:
+#       - image: laclac0901/hello
+#         name: app
+#         ports: 
+#           - containerPort: 80
+#         imagePullPolicy: Always  
+#         resources:
+#           requests:
+#             memory: "64Mi"
+#             cpu: "250m"
+#           limits:
+#             memory: "1024Mi"
+#             cpu: "500m"     
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    service: app
   name: app
+  labels:
+    app: app
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: app
   template:
     metadata:
       labels:
-        service: app
+        app: app
     spec:
       containers:
-      - image: laclac0901/hello
-        name: app
-        ports: 
-          - containerPort: 80
+      - name: hello
+        image: laclac0901/hello
+        ports:
+        - containerPort: 80
         imagePullPolicy: Always  
         resources:
           requests:
@@ -23,4 +52,4 @@ spec:
             cpu: "250m"
           limits:
             memory: "1024Mi"
-            cpu: "500m"     
+            cpu: "500m" 
