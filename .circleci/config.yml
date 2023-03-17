@@ -70,9 +70,9 @@ jobs:
           nodes-min: 1
           nodes-max: 2
       - run: 
-        name: Debug
-        command: |
-          ls
+          name: Debug
+          command: |
+            ls
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: << parameters.cluster-name >>
           install-kubectl: true
