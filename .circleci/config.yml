@@ -36,43 +36,43 @@ jobs:
   #         key: v1-dependencies-{{ checksum "requirements.txt" }}
 
 
-  build-docker: 
-    environment: 
-      IMAGE_NAME: laclac0901/hello                     
-    docker:
-      - image: circleci/buildpack-deps:stretch
-    working_directory: ~/devops-capstone
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Build docker image
-          command: |
-            docker build -t $IMAGE_NAME:latest .
-            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            docker push $IMAGE_NAME:latest
+  # build-docker: 
+  #   environment: 
+  #     IMAGE_NAME: laclac0901/hello                     
+  #   docker:
+  #     - image: circleci/buildpack-deps:stretch
+  #   working_directory: ~/devops-capstone
+  #   steps:
+  #     - checkout
+  #     - setup_remote_docker
+  #     - run:
+  #         name: Build docker image
+  #         command: |
+  #           docker build -t $IMAGE_NAME:latest .
+  #           echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+  #           docker push $IMAGE_NAME:latest
 
-  create-k8s:
-    docker:
-      - image: 'cimg/python:3.10'
-    parameters:
-      cluster-name:
-        description: Name of the EKS cluster
-        type: string
-        default: 'ngocht-eks'
-    steps:
-      - checkout
-      - aws-eks/create-cluster:
-          cluster-name: << parameters.cluster-name >>
-          aws-region: ap-southeast-1
-          node-type: t3.medium
-          nodes: 1
-          nodes-min: 1
-          nodes-max: 2
-      - run: 
-          name: Debug
-          command: |
-            ls
+  # create-k8s:
+  #   docker:
+  #     - image: 'cimg/python:3.10'
+  #   parameters:
+  #     cluster-name:
+  #       description: Name of the EKS cluster
+  #       type: string
+  #       default: 'ngocht-eks'
+  #   steps:
+  #     - checkout
+  #     - aws-eks/create-cluster:
+  #         cluster-name: << parameters.cluster-name >>
+  #         aws-region: ap-southeast-1
+  #         node-type: t3.medium
+  #         nodes: 1
+  #         nodes-min: 1
+  #         nodes-max: 2
+  #     - run: 
+  #         name: Debug
+  #         command: |
+  #           ls
 
   deploy-k8s:
     docker: 
@@ -140,6 +140,6 @@ workflows:
   default:
     jobs:
       # - lint
-      - build-docker
-      - create-k8s
+      # - build-docker
+      # - create-k8s
       - deploy-k8s
