@@ -141,5 +141,5 @@ workflows:
     jobs:
       # - lint
       - build-docker
-      # - create-k8s
+      - create-k8s
       - deploy-k8s
