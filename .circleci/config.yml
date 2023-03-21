@@ -118,6 +118,6 @@ workflows:
       # - lint
       # - build-docker
       - create-k8s
-      - deploy-k8s
+      - deploy-k8s:
           requires: 
             - create-k8s
