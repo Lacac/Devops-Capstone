@@ -52,27 +52,27 @@ jobs:
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:latest
 
-  # create-k8s:
-  #   docker:
-  #     - image: 'cimg/python:3.10'
-  #   parameters:
-  #     cluster-name:
-  #       description: Name of the EKS cluster
-  #       type: string
-  #       default: 'ngocht-eks'
-  #   steps:
-  #     - checkout
-  #     - aws-eks/create-cluster:
-  #         cluster-name: << parameters.cluster-name >>
-  #         aws-region: ap-southeast-1
-  #         node-type: t3.medium
-  #         nodes: 1
-  #         nodes-min: 1
-  #         nodes-max: 2
-  #     - run: 
-  #         name: Debug
-  #         command: |
-  #           ls
+  create-k8s:
+    docker:
+      - image: 'cimg/python:3.10'
+    parameters:
+      cluster-name:
+        description: Name of the EKS cluster
+        type: string
+        default: 'ngocht-eks'
+    steps:
+      - checkout
+      - aws-eks/create-cluster:
+          cluster-name: << parameters.cluster-name >>
+          aws-region: ap-southeast-1
+          node-type: t3.medium
+          nodes: 1
+          nodes-min: 1
+          nodes-max: 2
+      - run: 
+          name: Debug
+          command: |
+            ls
 
   deploy-k8s:
     docker: 
